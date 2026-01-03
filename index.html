@@ -1,23 +1,541 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
+
+    <!-- Schema.org JSON-LD (Updated for storage company) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MovingCompany",
+      "name": "전국 짐보관 솔루션 센터",
+      "description": "전국 짐보관 전문 서비스. 안전한 짐보관, 포장 및 운송, 사무실 짐보관, 원룸 짐보관, 장기/단기 보관 서비스를 제공합니다.",
+      "url": "https://www.storage-solution-korea.com",
+      "telephone": "+82-2-1234-5678",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "서울특별시",
+        "addressRegion": "대한민국",
+        "streetAddress": "전국 짐보관로 123"
+      },
+      "sameAs": [
+        "https://www.facebook.com/storage_solution_korea",
+        "https://instagram.com/storage_solution_korea"
+      ],
+      "serviceType": [
+        "장기 짐보관",
+        "단기 짐보관",
+        "포장이사 짐보관",
+        "창고형 짐보관",
+        "셀프 스토리지"
+      ]
+    }
+    </script>
+
+    <style>
+      /* Google Fonts Import */
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+      /* Basic Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Noto Sans KR', sans-serif;
+        line-height: 1.7;
+        color: #444;
+        background-color: #fcfcfc;
+      }
+      a {
+        text-decoration: none;
+        color: #007bff;
+        transition: color 0.3s ease;
+      }
+      a:hover, a:focus {
+        color: #0056b3;
+        text-decoration: underline;
+      }
+
+      header {
+        background-color: #3f51b5; /* Primary Blue */
+        color: #fff;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+      header p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 25px;
+        flex-wrap: wrap;
+      }
+      nav ul li a {
+        color: #fff;
+        font-size: 1.1rem;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      nav ul li a:hover {
+        background-color: #5c6bc0;
+        color: #fff;
+      }
+
+      main {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      section {
+        margin-bottom: 60px;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      }
+      h2 {
+        color: #3f51b5;
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+        border-bottom: 3px solid #e0eaff;
+        padding-bottom: 15px;
+        font-weight: 700;
+      }
+      h3 {
+        color: #4caf50; /* Green highlight color */
+        font-size: 1.6rem;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      /* Keywords Lists */
+      .keywords-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 15px;
+      }
+      .keywords-list span {
+        background-color: #e8f5e9; /* Light green background */
+        color: #2e7d32; /* Darker green text */
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        border: 1px solid #c8e6c9;
+      }
+
+      p {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+      }
+      .highlight {
+        font-weight: 700;
+        color: #3f51b5;
+      }
+      .sub-highlight {
+        font-weight: 600;
+        color: #4caf50;
+      }
+
+      /* CTA Button Design */
+      .cta-button {
+        display: inline-block;
+        background-color: #ff9800; /* Orange CTA */
+        color: white;
+        padding: 16px 32px;
+        font-size: 1.3rem;
+        border-radius: 30px;
+        font-weight: 700;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-top: 25px;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .cta-button:hover, .cta-button:focus {
+        background-color: #f57c00;
+        transform: translateY(-2px);
+        text-decoration: none;
+      }
+
+      /* Table Styles for Pricing/Comparison */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 25px;
+        font-size: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+      th, td {
+        border: 1px solid #ddd;
+        padding: 15px;
+        text-align: center;
+      }
+      th {
+        background-color: #f4f6f9;
+        color: #3f51b5;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* Form Styling */
+      .form-container {
+        padding: 30px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        border: 1px solid #eee;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #555;
+      }
+      input[type="text"], input[type="tel"], input[type="email"], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+      .form-submit-button {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      }
+      .form-submit-button:hover {
+        background-color: #388e3c;
+      }
+
+      /* Area List Column Layout */
+      .area-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 10px;
+        list-style: none;
+        margin-bottom: 20px;
+      }
+      .area-list li {
+        padding: 8px 12px;
+        background-color: #f0f8ff;
+        border-radius: 5px;
+        color: #3f51b5;
+        font-weight: 500;
+        font-size: 0.95rem;
+        text-align: center;
+        border: 1px solid #e0eaff;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 30px 20px;
+        background-color: #3f51b5;
+        color: white;
+        font-size: 0.9rem;
+        margin-top: 50px;
+        line-height: 1.8;
+      }
+      footer address {
+        font-style: normal;
+        margin-bottom: 10px;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.8rem; }
+        h3 { font-size: 1.4rem; }
+        nav ul { flex-direction: column; gap: 10px; }
+        nav ul li a { padding: 8px; font-size: 1rem; }
+        main { padding: 0 15px; }
+        section { padding: 20px; }
+        .area-list { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+      }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>전국 짐보관업체 1위 추천: 안전하고 전문적인 보관 솔루션</h1>
+        <p>이사, 리모델링, 해외 거주 시 짐보관이 필요하신가요? 2026년 최신 기준으로 안전하고 전문적인 짐보관 솔루션을 제공합니다.</p>
+        <nav aria-label="주요 메뉴">
+            <ul>
+                <li><a href="#service_guide">서비스 종류</a></li>
+                <li><a href="#cost_analysis">가격 및 견적</a></li>
+                <li><a href="#trust_factors">업체 선정 기준</a></li>
+                <li><a href="#keywords_section">검색 키워드 분석</a></li>
+                <li><a href="#quote_form">견적 문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <main>
-      <h1>Home page</h1>
+        <!-- Section 1: Introduction and Service Types -->
+        <section id="service_guide">
+            <h2>짐보관업체 선택이 중요한 이유와 서비스 종류</h2>
+            <p>최근 1인 가구 증가와 주택 시장의 변화로 인해 <span class="highlight">짐보관업체</span>의 역할이 더욱 중요해지고 있습니다. 이사 시점 불일치, 인테리어 공사, 해외 장기 출장 등 다양한 상황에서 짐을 안전하게 보관할 공간이 필요합니다. 짐보관업체를 선택할 때는 단순히 가격뿐만 아니라 보관 환경, 보안, 보험 여부를 꼼꼼히 확인해야 합니다.</p>
+
+            <h3>1. 장기/단기 보관 서비스 (Short-term vs. Long-term Storage)</h3>
+            <p><strong>단기 짐보관:</strong> 보통 1~3개월 이내의 짧은 기간 동안 짐을 맡기는 경우입니다. 인테리어 공사나 일시적인 주거 이동 시 유용합니다. 비용은 보관 기간이 짧을수록 일할 계산되는 경우가 많습니다.</p>
+            <p><strong>장기 짐보관:</strong> 3개월 이상, 때로는 몇 년간 짐을 보관하는 서비스입니다. 해외 장기 체류, 주택 청약 후 입주 대기 기간, 사업 확장으로 인한 재고 보관 등에 주로 활용됩니다. 장기 보관일수록 월별 비용이 할인되는 경우가 많으며, 보관 환경(습도, 온도 조절)이 매우 중요합니다.</p>
+
+            <h3>2. 셀프 스토리지(Self-Storage)와 창고형 보관의 차이점</h3>
+            <p><strong>셀프 스토리지:</strong> 개인이 직접 짐을 포장하고 보관소에 입출고하는 방식입니다. 보관 장소를 자유롭게 이용할 수 있다는 장점이 있지만, 포장 및 운반은 개인의 책임입니다. <span class="sub-highlight">창고형 짐보관업체</span>는 업체에서 전문 인력이 짐을 수거하고 보관하며, 철저한 관리를 통해 짐의 안전을 보장합니다.</p>
+
+            <a href="#quote_form" class="cta-button">무료 견적 상담 받기</a>
+        </section>
+
+        <!-- Section 2: Pricing and Cost Factors (Graph/Table) -->
+        <section id="cost_analysis">
+            <h2>2026년 짐보관 비용 가이드 및 견적 산정 요소</h2>
+            <p>짐보관 비용은 여러 요소에 따라 크게 달라집니다. 보관할 짐의 양, 보관 기간, 보관 환경(온/습도 조절 여부), 그리고 계절적 요인(성수기/비수기)이 영향을 미칩니다. 다음은 일반적인 짐보관 비용에 영향을 미치는 주요 요소를 표로 정리한 것입니다.</p>
+
+            <h3>짐보관 서비스 유형별 평균 비용 비교 (2026년 기준)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>서비스 유형</th>
+                        <th>짐 보관 용량 기준 (1톤 기준)</th>
+                        <th>월평균 비용 (추정)</th>
+                        <th>주요 특징</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>단기 창고 보관 (1~3개월)</strong></td>
+                        <td>1톤 (원룸 이사짐 기준)</td>
+                        <td>100,000원 ~ 150,000원</td>
+                        <td>이사 일정 조정, 인테리어 공사 시 적합.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>장기 창고 보관 (3개월 이상)</strong></td>
+                        <td>1톤 (원룸 이사짐 기준)</td>
+                        <td>80,000원 ~ 120,000원</td>
+                        <td>해외 출장, 장기 거주 시 할인 적용.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>셀프 스토리지</strong></td>
+                        <td>Locker (1평 미만)</td>
+                        <td>50,000원 ~ 100,000원</td>
+                        <td>접근성 용이, 개인 짐 직접 관리.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>컨테이너 보관 (대형 짐)</strong></td>
+                        <td>5톤 이상</td>
+                        <td>200,000원 ~ 300,000원</td>
+                        <td>대용량 보관, 물류창고형.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>*주의: 위 비용은 2026년 기준 평균 추정치이며, 지역별, 업체별로 차이가 있을 수 있습니다. 정확한 견적은 전문가 상담을 통해 확인하시기 바랍니다.</p>
+
+            <h3>추가 비용 발생 요인</h3>
+            <p><strong>짐 포장 및 운송 비용:</strong> 짐보관업체에 따라 짐 수거/배송 비용이 별도로 청구될 수 있습니다. 포장이사 업체와 연계된 짐보관 서비스는 이사 시점과 짐 보관 시점을 효율적으로 관리해줍니다.</p>
+            <p><strong>보험 가입:</strong> 짐 보관 중 발생할 수 있는 파손이나 분실에 대비하여 보험 가입을 권장합니다. 업체에 따라 기본 보험이 포함되거나 추가 비용으로 가입 가능합니다.</p>
+        </section>
+
+        <!-- Section 3: Naver Search Keywords Analysis -->
+        <section id="keywords_section">
+            <h2>Naver 검색 키워드 분석 및 서비스 확장</h2>
+
+            <h3>자동완성 키워드 (Auto-complete Keywords)</h3>
+            <p>네이버 검색창에 "짐보관업체"를 입력하면 추천되는 인기 검색어들입니다. 고객의 주된 관심사를 파악하고 콘텐츠에 포함하는 것이 SEO에 유리합니다.</p>
+            <div class="keywords-list" aria-label="자동완성 키워드 목록">
+                <span>짐보관업체</span>
+                <span>짐보관 비용</span>
+                <span>셀프 스토리지 가격</span>
+                <span>이사 짐보관</span>
+                <span>단기 짐보관</span>
+                <span>장기 짐보관</span>
+                <span>서울 짐보관</span>
+                <span>원룸 짐보관</span>
+                <span>짐보관업체 추천</span>
+                <span>포장이사 짐보관 서비스</span>
+            </div>
+
+            <h3>연관 검색어 및 함께 많이 찾는 키워드</h3>
+            <p>짐보관 서비스를 찾는 사람들이 함께 검색하는 관련 키워드입니다. 다양한 검색 의도(정보 탐색, 비용 비교, 지역 탐색)에 대응하여 검색 유입을 늘릴 수 있습니다.</p>
+            <div class="keywords-list" aria-label="연관 검색어 목록">
+                <span>짐 보관 창고</span>
+                <span>가구 보관 서비스</span>
+                <span>계절옷 보관</span>
+                <span>리모델링 짐 보관</span>
+                <span>해외 이주 짐보관</span>
+                <span>물품 보관소</span>
+                <span>짐 보관 컨테이너</span>
+                <span>사무실 집기 보관</span>
+                <span>짐보관 보험</span>
+                <span>보관이사 업체 후기</span>
+            </div>
+        </section>
+
+        <!-- Section 4: National Service Area Expansion (30+ regions) -->
+        <section id="service_area">
+            <h2>전국 서비스 가능 지역: 짐보관업체 전국망 구축</h2>
+            <p>짐보관 서비스는 지역별 접근성이 매우 중요합니다. 당사는 서울, 경기권을 비롯해 전국 주요 광역시 및 지방 도시까지 광범위한 서비스 네트워크를 갖추고 있습니다. 고객님의 위치와 관계없이 신속하고 안전한 짐보관 서비스를 제공합니다.</p>
+
+            <h3>전국 주요 서비스 가능 지역 목록 (30개 이상)</h3>
+            <ul class="area-list">
+                <li><a href="#quote_form" class="internal-link">서울 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">부산 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">대구 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">인천 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">광주 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">대전 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">울산 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">세종 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 수원 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 성남 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 고양 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 용인 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 부천 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 안산 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 화성 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">충남 천안 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">충북 청주 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">전북 전주 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">전남 여수 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경북 포항 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경남 창원 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">강원 춘천 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">강원 원주 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">제주 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 평택 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 파주 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경남 김해 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경북 구미 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">충남 아산 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">전남 순천 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경북 경주 짐보관</a></li>
+                <li><a href="#quote_form" class="internal-link">경기 김포 짐보관</a></li>
+            </ul>
+        </section>
+
+        <!-- Section 5: Trust and Reliability (E-A-T) -->
+        <section id="trust_factors">
+            <h2>신뢰할 수 있는 짐보관업체 선정 기준과 외부 정보 활용</h2>
+            <p>소중한 물건을 맡기는 만큼, 업체 선정 시 신뢰성과 안전성을 최우선으로 고려해야 합니다. 다음은 짐보관업체를 선택할 때 반드시 확인해야 할 사항들입니다.</p>
+
+            <h3>1. 보관 환경과 보안 시스템</h3>
+            <p>온도 및 습도 조절 시설이 갖춰진 곳인지 확인해야 합니다. 특히 장기간 짐을 보관할 경우, 의류나 가구에 곰팡이가 생길 위험이 높으므로 항온항습 관리가 필수입니다. 24시간 CCTV 모니터링 및 출입 통제 시스템 등 보안 시설도 꼼꼼히 체크해야 합니다.</p>
+
+            <h3>2. 보험 가입 및 계약 조건 확인</h3>
+            <p>만약의 사태에 대비하여 <span class="sub-highlight">보관물품 손해배상보험 가입 여부</span>를 확인하는 것이 중요합니다. 계약서 작성 시 보상 범위, 기간, 추가 요금 규정 등을 명확히 해야 추후 분쟁을 예방할 수 있습니다.</p>
+
+            <h3>3. 공인된 외부 정보 참고 (신뢰성 확보)</h3>
+            <p>다음은 짐보관 및 이사 관련하여 참고할 만한 공신력 있는 외부 정보입니다. [외부사이트 링크 삽입]</p>
+            <ul>
+                <li><strong>국토교통부 이사 화물 표준약관:</strong> 이사 서비스와 관련된 분쟁 시 참고할 수 있는 법적 기준을 제공합니다. <a href="https://www.law.go.kr" target="_blank">대한민국 법제처 (law.go.kr)</a></li>
+                <li><strong>소비자원 피해구제 사례:</strong> 짐보관업체 관련 소비자 피해 사례를 확인하여 사전에 불량 업체를 걸러낼 수 있습니다. <a href="https://www.kca.go.kr" target="_blank">한국소비자원 (kca.go.kr)</a></li>
+                <li><strong>셀프 스토리지 산업 동향:</strong> 짐보관 산업의 전반적인 동향과 시장 규모를 파악할 수 있습니다. <a href="https://namu.wiki/w/%EC%85%80%ED%94%84%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80" target="_blank">나무위키 - 셀프 스토리지</a></li>
+                <li><strong>공정거래위원회 분쟁 해결 기준:</strong> 계약 해지나 서비스 불만족 시 분쟁 해결을 위한 기준을 확인할 수 있습니다. <a href="https://www.ftc.go.kr" target="_blank">공정거래위원회 (ftc.go.kr)</a></li>
+                <li><strong>관세청 해외 이사 정보:</strong> 해외 이주 시 짐보관과 관련된 통관 및 관세 정보를 확인할 수 있습니다. <a href="https://www.customs.go.kr" target="_blank">관세청 (customs.go.kr)</a></li>
+            </ul>
+        </section>
+
+        <!-- Section 6: User Engagement - Detailed Quote Form -->
+        <section id="quote_form">
+            <h2>짐보관 견적 문의 및 상담 신청 (Dwell Time 요소)</h2>
+            <p>짐보관 견적은 짐의 종류와 양에 따라 맞춤형으로 산정됩니다. 정확한 견적을 위해 상세 정보를 입력해주시면 전문 상담원이 연락드리겠습니다. (전화번호와 이메일 주소를 정확하게 입력해주세요)</p>
+
+            <div class="form-container">
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="name">이름:</label>
+                        <input type="text" id="name" name="name" required placeholder="예: 홍길동">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">연락처:</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="예: 010-1234-5678">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">이메일:</label>
+                        <input type="email" id="email" name="email" placeholder="예: example@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="service_type">희망 서비스 유형:</label>
+                        <select id="service_type" name="service_type" required>
+                            <option value="">서비스 유형 선택</option>
+                            <option value="장기 짐보관">장기 짐보관 (3개월 이상)</option>
+                            <option value="단기 짐보관">단기 짐보관 (3개월 미만)</option>
+                            <option value="포장이사 연계 보관">포장이사 연계 보관</option>
+                            <option value="셀프 스토리지">셀프 스토리지</option>
+                            <option value="사무실 집기 보관">사무실 집기 보관</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="item_volume">짐 보관 예상량 (이사짐 기준):</label>
+                        <select id="item_volume" name="item_volume" required>
+                            <option value="">선택</option>
+                            <option value="원룸">원룸 (1톤 이하)</option>
+                            <option value="1.5룸">1.5룸 (1.5톤)</option>
+                            <option value="2룸">2룸 (2톤~2.5톤)</option>
+                            <option value="3룸">3룸 (3톤~5톤)</option>
+                            <option value="사무실/대형">사무실/대형 (5톤 이상)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="moving_date">짐 보관 시작 희망일:</label>
+                        <input type="text" id="moving_date" name="moving_date" placeholder="예: 2026년 3월 15일">
+                    </div>
+                    <div class="form-group">
+                        <label for="details">상세 문의 내용 (특이사항, 보관 물품 등):</label>
+                        <textarea id="details" name="details" placeholder="보관하고자 하는 물품의 종류(가구, 의류, 전자제품 등)와 기타 요청 사항을 자세히 적어주시면 정확한 견적 산정에 도움이 됩니다."></textarea>
+                    </div>
+                    <button type="submit" class="form-submit-button">견적 문의 신청하기</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Section 7: Final CTA and Quick Contact -->
+        <section id="contact_info">
+            <h2>짐보관 관련 궁금증, 지금 바로 문의하세요.</h2>
+            <p>짐보관은 짐의 종류와 기간에 따라 비용과 보관 방식이 달라집니다. 전문가와 상담하여 가장 합리적인 솔루션을 찾는 것이 중요합니다.</p>
+            <a href="tel:+82-2-1234-5678" class="cta-button" aria-label="전화 문의하기">지금 전화 상담하기 (클릭)</a>
+        </section>
     </main>
-  </body>
-</html>
+
+    <footer>
+        <p>전국 짐보관 솔루션 센터 | 사업자등록번호: 123-45-67890</p>
+        <address>
+            주소: 서울특별시 강남구 테헤란로 123 | 대표전화: <a href="tel:+82-2-1234-5678">+82-2-1234-5678</a><br>
+            이메일: info@storage-solution-korea.com | 개인정보처리방침 | 이용약관
+        </address>
+        <p>&copy; 2026 All rights reserved.</p>
+    </footer>
+
+  
